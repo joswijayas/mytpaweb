@@ -1,0 +1,32 @@
+.navbar-right-mobile{
+    display: none;
+    position: relative;
+    padding-top: 8px;
+    .navbar-burger{
+        padding-top: 30px;
+        position: absolute;
+        top: 20px;
+        right: 0;
+        z-index: 1000;
+        .navbar-right-component{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            background-color: white;
+            padding: 2rem 1rem;
+            border-radius: 2px;
+            box-shadow: 2px;
+        }
+    }
+
+}
+
+@media screen and (max-width: 514px) {
+    .navbar-right{
+        display: none
+    }
+    .navbar-right-mobile{
+
+        display: flex;
+    }
+}

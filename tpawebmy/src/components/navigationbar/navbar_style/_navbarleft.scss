@@ -1,0 +1,13 @@
+.navbar-left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        height: 30px;
+        width: 30px;
+    }
+    
+    img:hover{
+        cursor: pointer;
+    }
+}
