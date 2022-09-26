@@ -7,7 +7,6 @@ import (
 	"tpabend/bendtpa/database"
 	"tpabend/bendtpa/graph/model"
 	"tpabend/bendtpa/tools"
-
 	"github.com/google/uuid"
 	"github.com/vektah/gqlparser/v2/gqlerror"
 	"gorm.io/gorm"
@@ -88,17 +87,18 @@ func UserLogin(ctx context.Context, email string, password string) (interface{},
 	return map[string]interface{}{
 		"id":                 user.ID,
 		"name":               user.Name,
-		"first_name":         user.FirstName,
-		"last_name":          user.LastName,
+		"firstName":         user.FirstName,
+		"lastName":          user.LastName,
 		"is_active":          user.IsActive,
 		"email":              user.Email,
 		"about":              user.About,
-		"background_picture": user.BackgroundPicture,
-		"profile_picture":    user.ProfilePicture,
+		"backgroundPicture": user.BackgroundPicture,
+		"profilePicture":    user.ProfilePicture,
 		"headline":           user.Headline,
 		"position":           user.Position,
 		"pronoun":            user.Pronoun,
 		"region":             user.Region,
+		"experiences":		  user.Experiences,
 		"token":              token,
 	}, nil
 

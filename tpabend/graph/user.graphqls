@@ -27,21 +27,27 @@ type User {
   profilePicture: String!
   backgroundPicture: String
   isActive: Boolean!
+  Experiences: [Experience!]! @goField(forceResolver: true)
+  Educations: [Education!]! @goField(forceResolver: true)
+  Connections: [Connection!]! @goField(forceResolver: true)
+  ConnectionRequests: [ConnectionRequest!]! @goField(forceResolver: true)
 }
 
 type Query {
   user(id: ID!): User!
   users: [User!]!
-  mine: User!
+  mine: User! 
   protected: String! @goField(forceResolver: true) @auth
 }
 
 type Mutation {
   registerUser(input: NewUser!): Any!
   loginUser(email: String!, password: String!): Any!
-  updateUser(id: ID!, input: NewUpdateUser!): User!
+  updateUser(id: ID!, input: UpdateUser!): Any!
   activateUser(id: ID!): Any!
-  updateAbout(id: ID!,  about: String!): Any!
+  updateAbout(id: ID!,  about: String!): Any! @auth
+  updateImage(id: ID!, profilePicture: String!): Any!
+  updateBgImage(id: ID!, backgroundPicture: String!): Any!
 }
 
 input NewUser{
@@ -61,4 +67,14 @@ input NewUpdateUser{
   about: String
   profilePicture: String
   backgroundPicture: String
+}
+
+input UpdateUser{
+  name: String!
+  firstName: String!
+  lastName: String
+  pronoun: String
+  headline: String
+  position: String
+  region: String
 }

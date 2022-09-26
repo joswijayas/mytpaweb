@@ -6,6 +6,7 @@ package graph
 import (
 	"context"
 	"fmt"
+	"log"
 	"tpabend/bendtpa/graph/generated"
 	"tpabend/bendtpa/graph/model"
 	"tpabend/bendtpa/service"
@@ -13,25 +14,6 @@ import (
 
 // RegisterUser is the resolver for the registerUser field.
 func (r *mutationResolver) RegisterUser(ctx context.Context, input model.NewUser) (interface{}, error) {
-	// model := &model.User{
-	// 	ID:                uuid.NewString(),
-	// 	Name:              "",
-	// 	Email:             input.Email,
-	// 	Password:          input.Password,
-	// 	FirstName:         "",
-	// 	LastName:          nil,
-	// 	Pronoun:           nil,
-	// 	Headline:          nil,
-	// 	Position:          nil,
-	// 	Region:            nil,
-	// 	About:             nil,
-	// 	ProfilePicture:    "https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-15.jpg",
-	// 	BackgroundPicture: nil,
-	// 	IsActive:          false,
-	// }
-	// err := r.DB.Create(model).Error
-
-	// return model, err
 	return service.UserRegister(ctx, input)
 }
 
@@ -42,8 +24,8 @@ func (r *mutationResolver) LoginUser(ctx context.Context, email string, password
 }
 
 // UpdateUser is the resolver for the updateUser field.
-func (r *mutationResolver) UpdateUser(ctx context.Context, id string, input model.NewUpdateUser) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: UpdateUser - updateUser"))
+func (r *mutationResolver) UpdateUser(ctx context.Context, id string, input model.UpdateUser) (interface{}, error) {
+	return service.UserUpdate(ctx, id, input)
 }
 
 // ActivateUser is the resolver for the activateUser field.
@@ -56,9 +38,20 @@ func (r *mutationResolver) UpdateAbout(ctx context.Context, id string, about str
 	return service.UpdateAbout(ctx, id, about)
 }
 
+// UpdateImage is the resolver for the updateImage field.
+func (r *mutationResolver) UpdateImage(ctx context.Context, id string, profilePicture string) (interface{}, error) {
+	return service.UpdateProfileImage(ctx, id, profilePicture)
+}
+
+// UpdateBgImage is the resolver for the updateBgImage field.
+func (r *mutationResolver) UpdateBgImage(ctx context.Context, id string, backgroundPicture string) (interface{}, error) {
+	return service.UpdateBackgroundImage(ctx, id, backgroundPicture)
+}
+
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: User - user"))
+	log.Print("ajjajajajajaj")
+	return service.GetUser(ctx, id)
 }
 
 // Users is the resolver for the users field.
@@ -76,11 +69,36 @@ func (r *queryResolver) Protected(ctx context.Context) (string, error) {
 	return "success", nil
 }
 
+// Experiences is the resolver for the Experiences field.
+func (r *userResolver) Experiences(ctx context.Context, obj *model.User) ([]*model.Experience, error) {
+	print("experience resolverr")
+	return service.GetUserExperience(ctx, obj)
+}
+
+// Educations is the resolver for the Educations field.
+func (r *userResolver) Educations(ctx context.Context, obj *model.User) ([]*model.Education, error) {
+	panic(fmt.Errorf("not implemented: Educations - Educations"))
+}
+
+// Connections is the resolver for the Connections field.
+func (r *userResolver) Connections(ctx context.Context, obj *model.User) ([]*model.Connection, error) {
+	return service.GetConnections(ctx, obj)
+}
+
+// ConnectionRequests is the resolver for the ConnectionRequests field.
+func (r *userResolver) ConnectionRequests(ctx context.Context, obj *model.User) ([]*model.ConnectionRequest, error) {
+	return service.GetConnectionRequest(ctx, obj)
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
+// User returns generated.UserResolver implementation.
+func (r *Resolver) User() generated.UserResolver { return &userResolver{r} }
+
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+type userResolver struct{ *Resolver }

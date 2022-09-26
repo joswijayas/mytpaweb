@@ -14,6 +14,7 @@ func UserCreate(ctx context.Context, input model.NewUser) (*model.User, error) {
 	db := database.GetDB()
 
 	input.Password = tools.HashPassword(input.Password)
+
 	user := model.User{
 		ID:                uuid.NewString(),
 		Name:              "",
@@ -83,6 +84,61 @@ func UpdateAbout(ctx context.Context, id string, about string)(interface{}, erro
 	}
 
 	model.About = &about
+
+	return model, db.Where("id = ?", id).Save(model).Error
+}
+
+func UpdateProfileImage(ctx context.Context, id string, profilePicture string)(interface{}, error){
+	model := new(model.User)
+	db := database.GetDB()
+	err := db.First(model, "id = ?", id).Error
+	if err != nil{
+		return nil, err
+	}
+
+	model.ProfilePicture = profilePicture
+
+	return model, db.Where("id = ?", id).Save(model).Error
+}
+
+func UpdateBackgroundImage(ctx context.Context, id string, backgroundPicture string)(interface{}, error){
+	model := new(model.User)
+	db := database.GetDB()
+	err := db.First(model, "id = ?", id).Error
+	if err != nil{
+		return nil, err
+	}
+
+	model.BackgroundPicture = &backgroundPicture
+
+	return model, db.Where("id = ?", id).Save(model).Error
+}
+
+func GetUser(ctx context.Context, id string) (*model.User, error){
+	db := database.GetDB()
+	var user model.User
+	err := db.Model(user).Where("id = ?", id).Take(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
+func UserUpdate(ctx context.Context, id string, input model.UpdateUser)(interface{}, error){
+	model := new(model.User)
+	db := database.GetDB()
+	err := db.First(model, "id = ?", id).Error
+	if err != nil{
+		return nil, err
+	}
+
+	model.Name = input.Name
+	model.FirstName = input.FirstName
+	model.LastName = input.LastName
+	model.Pronoun = input.Pronoun
+	model.Position = input.Position
+	model.Region = input.Region
+	model.Headline = input.Headline
 
 	return model, db.Where("id = ?", id).Save(model).Error
 }

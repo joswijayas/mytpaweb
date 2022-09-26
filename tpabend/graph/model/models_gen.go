@@ -2,43 +2,42 @@
 
 package model
 
+import (
+	"time"
+)
+
+type Job struct {
+	ID          string    `json:"id"`
+	Title       string    `json:"title"`
+	CompanyName string    `json:"companyName"`
+	City        string    `json:"city"`
+	Country     string    `json:"country"`
+	Status      string    `json:"status"`
+	Description string    `json:"description"`
+	Creator     string    `json:"creator"`
+	TimeStamp   time.Time `json:"timeStamp"`
+}
+
+type NewJob struct {
+	Title       string `json:"title"`
+	CompanyName string `json:"companyName"`
+	City        string `json:"city"`
+	Country     string `json:"country"`
+	Status      string `json:"status"`
+	Description string `json:"description"`
+}
+
 type NewLink struct {
 	Link   string `json:"link"`
 	UserID string `json:"userID"`
 }
 
-type NewUpdateUser struct {
-	Name              string  `json:"name"`
-	Email             string  `json:"email"`
-	FirstName         string  `json:"firstName"`
-	LastName          *string `json:"lastName"`
-	Pronoun           *string `json:"pronoun"`
-	Headline          *string `json:"headline"`
-	Position          *string `json:"position"`
-	Region            *string `json:"region"`
-	About             *string `json:"about"`
-	ProfilePicture    *string `json:"profilePicture"`
-	BackgroundPicture *string `json:"backgroundPicture"`
-}
-
-type NewUser struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
-type User struct {
-	ID                string  `json:"id"`
-	Name              string  `json:"name"`
-	Email             string  `json:"email"`
-	Password          string  `json:"password"`
-	FirstName         string  `json:"firstName"`
-	LastName          *string `json:"lastName"`
-	Pronoun           *string `json:"pronoun"`
-	Headline          *string `json:"headline"`
-	Position          *string `json:"position"`
-	Region            *string `json:"region"`
-	About             *string `json:"about"`
-	ProfilePicture    string  `json:"profilePicture"`
-	BackgroundPicture *string `json:"backgroundPicture"`
-	IsActive          bool    `json:"isActive"`
+type UpdateUser struct {
+	Name      string  `json:"name"`
+	FirstName string  `json:"firstName"`
+	LastName  *string `json:"lastName"`
+	Pronoun   *string `json:"pronoun"`
+	Headline  *string `json:"headline"`
+	Position  *string `json:"position"`
+	Region    *string `json:"region"`
 }
