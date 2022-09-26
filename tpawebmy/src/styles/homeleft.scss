@@ -1,0 +1,41 @@
+@import "./variable.scss";
+
+.home-left-container{
+    margin-top: 40px;
+    background-color: $secondary-color;
+    border-radius: 20px;
+    width: 225px;
+    height: 233px;
+}
+
+
+
+.home-profile-image{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // aspect-ratio: 1/1;
+}
+
+
+.home-profile-bg-image{
+    width: 225px;
+    height: 56px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.home-profile-pp{
+    margin-top: -50%;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+}
+
+.home-left-card-detail{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

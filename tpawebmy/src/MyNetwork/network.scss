@@ -1,0 +1,91 @@
+@import "../styles/variable.scss";
+
+.main-network{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: 
+    "sidebar content";
+    height: 1000px;
+}
+.my-connect{
+    background-color: $primary-light;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.my-connect:hover{
+    cursor: pointer;
+}
+
+.pending-connect {
+    background-color: $primary-light;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.pending-connect:hover{
+    cursor: pointer;
+}
+
+.network-left{
+    grid-area: sidebar;
+    background-color: $secondary-color;
+    margin: 20px;
+    display: grid;
+    align-items: center;
+    border-radius: 15px;
+    height: fit-content;
+    position: sticky;
+    top: 80px
+}
+
+.network-right {
+    display: grid;
+    grid-area: content;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    background-color: $secondary-color;
+    padding: 20px;
+    margin: 20px;
+    height: fit-content;
+    border-radius: 15px;
+  }
+
+@media screen and (max-width: 1080px) {
+    .network-right{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .network-right{
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    .home-left-container{
+        width: 145px;
+        margin-top: 15px;
+        height: fit-content;
+        button{
+            width: 60px;
+            font-size: 10px;
+        }
+    }
+    .home-profile-bg-image{
+        width: 180px;
+    }
+}
+
+.button-pending-request{
+    button{
+        margin-left: 10px;
+        color: $secondary-color;
+    }
+    .accept{
+        background-color: $accent-blue;
+    }
+    .ignore{
+        background-color: rgb(255, 118, 141);
+    }
+}

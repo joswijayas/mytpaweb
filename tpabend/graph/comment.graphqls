@@ -1,0 +1,30 @@
+type Comment{
+    id: ID!
+    postId: ID!
+    commentSenderId: ID!
+    replyCommentId: ID!
+    userComment: User! @goField(forceResolver: true)
+    Replies: [Comment!]! @goField(forceResolver: true)
+    Likes: [LikeComment!]! @goField(forceResolver: true)
+    commentText: String
+    timeStamp: Time!
+}
+
+type LikeComment{
+    id: ID!
+    commentId: ID!
+    User: User! @goField(forceResolver: true)
+}
+
+extend type Query{
+    postsComment(Limit: Int!, Offset: Int!, postId: ID!): [Comment]!
+    commentReply(Limit: Int!, Offset: Int!, commentId: ID!):[Comment!]!
+}
+
+extend type Mutation{
+    addComment(postId: ID!, commentSenderId: ID!, comment: String!): Comment!
+    addReply(commentSenderId: ID!, postId: ID!, replyCommentId: ID!, comment: String!): Comment!
+    likeComment(commentId: ID!, userId: ID!): LikeComment!
+    deleteLikeComment(commentId: ID!, userId: ID!): LikeComment!
+}
+

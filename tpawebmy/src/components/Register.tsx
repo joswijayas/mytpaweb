@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './../styles/register.scss'
 import logo from '../assets/logo.png'
 import { useMutation } from '@apollo/client'
@@ -69,6 +69,7 @@ const Register = () => {
       
   }
 
+
   const handleEmail = (e: React.SetStateAction<string>)=>{
     console.log(e)
     setEmail(e)
@@ -84,46 +85,53 @@ const Register = () => {
     setConfPassword(e)
   }
 
+  useEffect(() => {
+    if(localStorage.getItem("token") != null || localStorage.getItem("token") != undefined){
+      navigate('/MainPage')
+    }
+  }, [])
+  
+
   return (
-    <div className="main">
-      <div className="header">
-        <img src={logo} alt="" className='logo-img'/>
+    <div className="main-register">
+      <div className="header-register">
+        <img src={logo} alt="" className='logo-img-register'/>
       </div>
-      <div className="form">
-        <h3 className='form-headtitle'>Make the most of your professional life</h3>
-        <div className="form-container">
-            <div className="form-component">
-              <label className='error-message' htmlFor="">{error}</label>
+      <div className="form-register">
+        <h3 className='form-headtitle-register'>Make the most of your professional life</h3>
+        <div className="form-container-register">
+            <div className="form-component-register">
+              <label className='error-message-register' htmlFor="">{error}</label>
               <label htmlFor="">Email</label>
               <input onChange={(e)=>{handleEmail(e.target.value)}} type="email" name="" id="" />
             </div>
-            <div className="form-component">
+            <div className="form-component-register">
               <label htmlFor="">Password</label>
               <input onChange={(e)=>{handlePassword(e.target.value)}} type="password" name="" id="" />
             </div>
-            <div className="form-component">
+            <div className="form-component-register">
               <label htmlFor="">Confirmation Password</label>
               <input onChange={(e)=>{handleConfPassword(e.target.value)}} type="password" name="" id="" />
             </div>
-            <div className="span-agreement">
-              <span data-is-not-yielded="true" className="join-form__form-body-agreement">By clicking Agree &amp; Join, you agree to the LinkedIn <a target="_blank" className="join-form__form-body-agreement-item-link" href="https://www.linkedin.com/legal/user-agreement?trk=registration-frontend_join-form-user-agreement" data-tracking-will-navigate="" data-tracking-control-name="registration-frontend_join-form-user-agreement">User Agreement</a>, <a target="_blank" className="join-form__form-body-agreement-item-link" href="https://www.linkedin.com/legal/privacy-policy?trk=registration-frontend_join-form-privacy-policy" data-tracking-will-navigate="" data-tracking-control-name="registration-frontend_join-form-privacy-policy">Privacy Policy</a>, and  <a target="_blank" className="join-form__form-body-agreement-item-link" href="https://www.linkedin.com/legal/cookie-policy?trk=registration-frontend_join-form-cookie-policy" data-tracking-will-navigate="" data-tracking-control-name="registration-frontend_join-form-cookie-policy">Cookie Policy</a>. </span>
+            <div className="span-agreement-register">
+              <span data-is-not-yielded="true" className="join-form__form-body-agreement-register">By clicking Agree &amp; Join, you agree to the LinkedIn <a target="_blank" className="join-form__form-body-agreement-item-link" href="https://www.linkedin.com/legal/user-agreement?trk=registration-frontend_join-form-user-agreement" data-tracking-will-navigate="" data-tracking-control-name="registration-frontend_join-form-user-agreement">User Agreement</a>, <a target="_blank" className="join-form__form-body-agreement-item-link" href="https://www.linkedin.com/legal/privacy-policy?trk=registration-frontend_join-form-privacy-policy" data-tracking-will-navigate="" data-tracking-control-name="registration-frontend_join-form-privacy-policy">Privacy Policy</a>, and  <a target="_blank" className="join-form__form-body-agreement-item-link" href="https://www.linkedin.com/legal/cookie-policy?trk=registration-frontend_join-form-cookie-policy" data-tracking-will-navigate="" data-tracking-control-name="registration-frontend_join-form-cookie-policy">Cookie Policy</a>. </span>
             </div>
-            <div className="button">
+            <div className="button-register">
               <button onClick={registerClick}
                 type="button"
                 >
                   Agree & Join
               </button>
             </div>
-            <div className="span-agreement">
-              <span data-is-not-yielded="true" className="join-form__form-body-agreement">Already on LinkhedIn? <span className='link-to-signin' onClick={()=>{navigate('/Login')}}>SignIn</span></span>
+            <div className="span-agreement-register">
+              <span data-is-not-yielded="true" className="join-form__form-body-agreement-register">Already on LinkhedIn? <span className='link-to-signin' onClick={()=>{navigate('/Login')}}>SignIn</span></span>
             </div>
         </div>
         
       </div>
-      <footer className='footer'>
-        <div className="footer-component">
-          <div className="left">
+      <footer className='footer-register'>
+        <div className="footer-component-register">
+          <div className="left-register">
               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
     width="54.000000pt" height="12.000000pt" viewBox="0 0 2586.000000 564.000000"
     preserveAspectRatio="xMidYMid meet">
@@ -187,20 +195,20 @@ const Register = () => {
               </svg>              
               <a href="">&copy; 2022</a>
           </div>
-          <div className="center-right">
-            <div className="center">
-                <a target="#" href="">About</a>
-                <a target="#" href="">Accessbility</a>
+          <div className="center-right-register">
+            <div className="center-register">
+                <a target="#" href="https://about.linkedin.com/?trk=registration_footer-about">About</a>
+                <a target="#" href="https://www.linkedin.com/accessibility?trk=registration_footer-accessibility">Accessbility</a>
                 <a target="#" href="https://www.linkedin.com/legal/user-agreement?trk=registration-frontend_join-form-user-agreement">User Agreement</a>
-                <a target="https://www.linkedin.com/legal/privacy-policy?trk=registration-frontend_join-form-privacy-policy" href="">Privacy Policy</a>
-                <a target="https://www.linkedin.com/legal/cookie-policy?trk=registration-frontend_join-form-cookie-policy" href="">Cookie Policy</a>
+                <a target="#" href="https://www.linkedin.com/legal/privacy-policy?trk=registration-frontend_join-form-privacy-policy">Privacy Policy</a>
+                <a target="#" href="https://www.linkedin.com/legal/cookie-policy?trk=registration-frontend_join-form-cookie-policy">Cookie Policy</a>
             </div>
-            <div className="right">
-                <a target="#" href="">Copyright Policy</a>
-                <a target="#" href="">Brand Policy</a>
-                <a target="#" href="">Guest Controls</a>
-                <a target="#" href="">Community Guidelines</a>
-                <a target="#" href="">Language</a>
+            <div className="right-register">
+                <a target="#" href="https://www.linkedin.com/legal/copyright-policy?trk=registration_footer-copyright-policy">Copyright Policy</a>
+                <a target="#" href="https://brand.linkedin.com/policies?trk=registration_footer-brand-policy">Brand Policy</a>
+                <a target="#" href="https://www.linkedin.com/psettings/guest-controls?trk=registration_footer-guest-controls">Guest Controls</a>
+                <a target="#" href="https://www.linkedin.com/legal/professional-community-policies?trk=registration_footer-community-guide">Community Guidelines</a>
+                <a target="#" href="https://www.linkedin.com/legal/cookie-policy?trk=registration_footer-cookie-policy">Language</a>
             </div>
           </div>
         </div>

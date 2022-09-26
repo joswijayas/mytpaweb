@@ -1,7 +1,9 @@
+@import "./variable.scss";
+
 body{
     padding: 0;
     margin: 0;
-    background-color: #F3F2EF;
+    background-color: $primary-light;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     // height: fit-content;
     position: relative;
@@ -10,7 +12,7 @@ body{
 }
 
 
-.main{
+.main-register{
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -19,18 +21,18 @@ body{
     // height: fit-content;
 }
 
-.header{
+.header-register{
     width: 100%;
     position: fixed;
     top: 0;
-    .logo-img{
+    .logo-img-register{
         margin-left: 320px;
         margin-top: 40px;
         height: 40px;
         width: 180px;
     }
     @media screen and (max-width: 1000px) {
-        .logo-img{
+        .logo-img-register{
             margin-left: 10px;
             margin-top: 40px;
             height: 40px;
@@ -40,7 +42,7 @@ body{
     // background-color: aquamarine;
 }
 
-.form{
+.form-register{
     // margin-top: -100px;
     display: flex;
     flex-direction: column;
@@ -49,22 +51,22 @@ body{
     margin: auto;
 }
 
-.form-headtitle{
+.form-headtitle-register{
     font-weight: 500;
     color: rgb(83, 83, 83);
     text-align: center;
 }
 
-.form-container{
+.form-container-register{
     box-shadow: 0 0 0 2px #b9b9b96e;
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
     height: auto;
     max-width: 400px;
-    .error-message{
+    .error-message-register{
         color: rgb(0, 0, 0)
     }
-    .button{
+    .button-register{
         // margin-top: 20px;
         padding: 10px;
         text-align: center;
@@ -83,7 +85,7 @@ body{
     }
 }
 
-.form-component{
+.form-component-register{
     display: flex;
     flex-direction: column;
     width: 380px;
@@ -103,25 +105,25 @@ body{
         border: 1px solid  #0A66C2;
     }
 }
-.span-agreement{
+.span-agreement-register{
     text-align: center;
     align-items: center;
 }
-.join-form__form-body-agreement{
+.join-form__form-body-agreement-register{
     padding: 10px;
     text-align: center;
     font-size: 12px;
 }
 
-.link-to-signin{
+.link-to-signin-register{
     color: #0A66C2;
 }
 
-.link-to-signin:hover{
+.link-to-signin-register:hover{
     cursor: pointer;
 }
 
-.footer{
+.footer-register{
     position: absolute;
     right: 0;
     bottom: 0;
@@ -132,14 +134,14 @@ body{
     // align-items: center;
     padding: 10px;
 
-    .footer-component{
+    .footer-component-register{
         display: flex;
         flex-direction: row;
         justify-content: center;
     }
 
     @media screen and (max-width: 420px) {
-        .footer-component{
+        .footer-component-register{
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -147,8 +149,10 @@ body{
     }
 
 }
-
-.left{
+.error-message-register{
+    color: red;
+}
+.left-register{
     // justify-content: center;
     margin-top: 2px;
     display: flex;
@@ -165,11 +169,11 @@ body{
     }
 }
 
-.center-right{
+.center-right-register{
     display: flex;
 }
 
-.center{
+.center-register{
     justify-content: center;
     a{
         margin-left: 10px;
@@ -182,7 +186,7 @@ body{
     }
 }
 
-.right{
+.right-register{
     justify-content: center;
     a{
         margin-left: 10px;
@@ -196,25 +200,25 @@ body{
 }
 
 @media screen and (max-width: 420px) {
-    .center{
+    .center-register{
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
-    .right{
+    .right-register{
         display: flex;
         flex-direction: column;
         justify-content: center;
     
     }
-    .center-right{
+    .center-right-register{
         display: flex;
         flex-direction: row;
     }
-    .form-container{
+    .form-container-register{
         max-width: 320px;
     }
-    .form-component{
+    .form-component-register{
         width: 300px;
     }
 }

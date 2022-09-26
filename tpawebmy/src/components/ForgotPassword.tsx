@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { QUERY_LOGIN } from '../queris'
 import { UseCurrentUser } from '../Context/UserContext'
 import { GET_USER } from '../getquery'
-const Login = () => {
+const ForgotPassword = () => {
   // const googleId = window.google?.accounts.id
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -83,35 +83,6 @@ const Login = () => {
     setEmail(e)
   }
 
-  const handlePassword = (e: React.SetStateAction<string>)=>{
-    console.log(e)
-    setPassword(e)
-  }
-/* global google */
-        // @ts-ignore
-  function handleCallbackResponse(response){
-    console.log("jsdjsdj")
-    console.log("Encoded JWT ID token: ", + response)
-  }
-
-  useEffect(()=>{
-    /* global google */
-        // @ts-ignore
-    google.accounts.id.initialize({
-      client_id: "1083603475466-hunukm4nll2ncuofs5ccfiht25m4qf7f.apps.googleusercontent.com",
-      callback: handleCallbackResponse
-    });
-    /* global google */
-        // @ts-ignore
-    google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      {
-        theme: "outline", 
-        size: "large"
-      }
-    );
-  }, [])
-
   if(localStorage.getItem("token")){
     console.log('hahahahah')
     navigate('/MainPage')
@@ -123,34 +94,35 @@ const Login = () => {
         <img src={logo} alt="" className='logo-img-login'/>
       </div>
       <div className="form-login">
-        <h3 className='form-headtitle-login'>Make the most of your professional life</h3>
+       
         
         <div className="form-container-login">
-            <h2>Sign in</h2>
-            <span>Stay updated on your professional world</span>
+            <h2>Forgot password?</h2>
+            <span>Reset password in two quick steps</span>
             <div className="form-component-login">
               <label className='error-message-login' htmlFor="">{errorMessage}</label>
               {/* <label htmlFor="">Email</label> */}
               <input onChange={(e)=>{handleEmail(e.target.value)}} type="email" name="" id="" placeholder='Email' />
             </div>
-            <div className="form-component-login">
-              {/* <label htmlFor="">Password</label> */}
-              <input onChange={(e)=>{handlePassword(e.target.value)}} type="password" name="" id="" placeholder='Password' />
-            </div>
-            <div className="forgot-password-login">
-              <span onClick={()=>{navigate('/ForgotPassword')}} className="forgot-password-login"><a href="">Forgot password?</a> </span>
-            </div>
+            
+            
             <div className="button-login">
               <button onClick={loginClick}
                 type="button"
                 >
-                  Sign in
+                  Reset Password
               </button>
-              <div id='signInDiv'></div>
+              
             </div>
-            <div className="span-agreement-login">
-              <span data-is-not-yielded="true" className="join-form__form-body-agreement-login">Doesn't have an account? <span className='link-to-signin' onClick={()=>{navigate('/')}}>Register</span></span>
+            <div className="button-back">
+              <button onClick={()=>{navigate('/Login')}}
+                type="button"
+                >
+                  Back
+              </button>
+              
             </div>
+            
         </div>
         
       </div>
@@ -242,4 +214,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default ForgotPassword

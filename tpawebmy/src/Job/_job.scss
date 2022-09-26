@@ -1,0 +1,18 @@
+@import "../styles/variable.scss";
+.main-job{
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.job-detail{
+    background-color: $secondary-color;
+    border-radius: 15px;
+}
+
+.job-detail-detail{
+   margin-left: 10px;
+   margin-right: 10px;
+}

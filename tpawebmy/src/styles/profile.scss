@@ -1,14 +1,25 @@
+@import "./variable.scss";
+
+
 .top-0{
     top:0;
-    height: 100vh;
+    height: fit-content;
     width: 100vw;
 }
 
-.main{
+.main-profile{
     padding: 20px;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: auto;
+    @media screen and (max-width: 900px){
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
 }
 
 .left{
@@ -16,13 +27,49 @@
     width: 50%;
     display: flex;
     flex-direction: column;
+    margin-right: 20px;
+    @media screen and (max-width: 900px){
+        width: 85%;
+        margin-right: 0px;
+    }
 }
 
 .profile-head{
     background-color: white;
     border-radius: 10px;
     padding: 10px;
-   
+   button{
+    margin: 5px;
+   }
+   .edit-user-detail{
+    // margin-left: 70%;
+}
+   .logout{
+        background-color: rgb(255, 219, 219);
+        color: red;
+   }
+   .logout:hover{
+        background-color: rgb(255, 181, 181);
+        border-color: red;
+   }
+   .follow{
+        background-color: $accent-blue;
+        color: $secondary-color;
+   }
+   .follow:hover{
+        background-color: $accent-hover-blue;
+        color: $secondary-color;
+        border-color: $accent-hover-blue;
+    }
+    .connect{
+        background-color: $accent-blue;
+        color: $secondary-color;
+   }
+   .connect:hover{
+        background-color: $accent-hover-blue;
+        color: $secondary-color;
+        border-color: $accent-hover-blue;
+    }
 }
 
 .about{
@@ -35,28 +82,161 @@
         flex-direction: row;
         justify-content: space-between;
    }
+   .about-desc{
+    font-size: 14px;
+   }
 }
+.exp-desc{
+    height: 400px;
+}
+// .popup{
+//     height: full;
+//     width: full;
+//     background-color: rgba(255, 255, 255, 0.521);
+//     top: 0;
+//     left: 0;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     z-index: 4000;
+// }
 
-.popup{
-    height: full;
-    width: full;
-    background-color: rgba(255, 255, 255, 0.521);
-    top: 0;
-    left: 0;
+.tag-input{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 4000;
+    flex-direction: column;
+    height: 50px;       
 }
 
 .right{
-    width: 20%;
+    width: 40%;
     img{
         border-radius: 10px;
+        width: 100%;
+        @media screen and (min-width: 900px){
+            width: 300px;
+        }
     }
 }
 
 .profile-img{
-    height: 160px;
-    width: 160px;
+    // height: 6%;
+    // z-index: -1;
+    aspect-ratio: 1/1;
+    width: 6%;
+    position: absolute;
+    cursor: pointer;
+    object-fit: cover;
+    border-radius: 100%;
+    margin-top: 3%;
+    margin-left: 1%;
+}
+
+.background-img{
+    display: block;
+    width: 100%;
+}
+.error-msg{
+    color: red;
+}
+
+.education{
+    background-color: white;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px;
+   .education-head{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+   }
+}
+
+
+.education-child {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    img {
+        width: 100px;
+    }
+    h4 {
+        margin: 0;
+    }
+    p {
+        margin: 0;
+    }
+}
+
+.time-span {
+    font-weight: 400;
+    max-width: 100%;
+}
+
+.experience{
+    font-size: 14px;
+    background-color: white;
+    flex-direction: column;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px;
+   .experience-head{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+   }
+}
+.experience-child {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    gap: 20px;
+    img {
+        width: 100px;
+    }
+    h4 {
+        margin: 0;
+    }
+    p {
+        margin: 0;
+    }
+}
+.experience-body{
+    margin-left: 16px;
+    width: 90%;
+    color: rgb(0, 0, 0);
+}
+
+.experience-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    img{
+        width: 100px;
+        height: 50px;
+    }
+}
+
+.icon-delete-update{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.footer-register-profile{
+    margin-top: 100px;
+    padding: 10px;
+
+    .footer-component-register{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    @media screen and (max-width: 420px) {
+        .footer-component-register{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+
 }

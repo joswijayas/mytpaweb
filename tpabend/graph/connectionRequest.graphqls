@@ -1,0 +1,11 @@
+type ConnectionRequest{
+    id: ID!
+    sender: User! @goField(forceResolver: true)
+    receiver: User! @goField(forceResolver: true)
+    message: String!
+}
+
+extend type Mutation{
+    addConnectionRequest(senderId: ID!, receiverId: ID!, message: String!) : ConnectionRequest!
+    deleteConnectionRequest(senderId: ID!, receiverId: ID!) : ConnectionRequest!
+}

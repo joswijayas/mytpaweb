@@ -8,10 +8,10 @@ const NavbarLeft = () => {
 
     return (
         <div className="navbar-left">
-            <img src="https://static-exp1.licdn.com/sc/h/akt4ae504epesldzj74dzred8" alt="logos" onClick={()=>navigate('/Home')}/>
+            <img src="https://static-exp1.licdn.com/sc/h/akt4ae504epesldzj74dzred8" alt="logos" onClick={()=>navigate('/MainPage')}/>
             <NavbarSearch/>
         </div>
     )
 }
 
-export default NavbarLeft
+export default NavbarLeft 

@@ -1,7 +1,8 @@
+@import "./variable.scss";
 body{
     padding: 0;
     margin: 0;
-    background-color: #F3F2EF;
+    background-color: $primary-light;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: fit-content;
     position: relative;
@@ -9,25 +10,25 @@ body{
     width: 100vw;
 }
 
-.main{
+.main-login{
     width: 100vw;
     display: flex;
     flex-direction: column;
     height: fit-content;
 }
 
-.header{
+.header-login{
     width: 100%;
     position: fixed;
     top: 0;
-    .logo-img{
+    .logo-img-login{
         margin-left: 320px;
         margin-top: 40px;
         height: 40px;
         width: 180px;
     }
     @media screen and (max-width: 1000px) {
-        .logo-img{
+        .logo-img-login{
             margin-left: 10px;
             margin-top: 40px;
             height: 40px;
@@ -37,21 +38,21 @@ body{
     // background-color: aquamarine;
 }
 
-.form{
-    margin-top: -100px;
+.form-login{
+    margin-top: 15%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.form-headtitle{
+.form-headtitle-login{
     font-weight: 500;
     color: rgb(83, 83, 83);
     text-align: center;
 }
 
-.form-container{
+.form-container-login{
     box-shadow: 0 0 0 2px #b9b9b96e;
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
@@ -64,10 +65,10 @@ body{
     span{
         padding: 10px;
     }
-    .error-message{
+    .error-message-login{
         color: red
     }
-    .button{
+    .button-login{
         // margin-top: 20px;
         padding: 10px;
         text-align: center;
@@ -84,9 +85,25 @@ body{
             background-color: #001122;
         }
     }
+    .button-back{
+        padding: 10px;
+        text-align: center;
+        button{
+            outline: none;
+            background-color: $primary-light;
+            width: 100%;
+            color: rgb(86, 86, 86);
+        }
+        button:hover{
+            background-color: #cecece;
+        }
+        button:active{
+            background-color: #959595;
+        }
+    }
 }
 
-.form-component{
+.form-component-login{
     display: flex;
     flex-direction: column;
     width: 380px;
@@ -107,32 +124,32 @@ body{
         border: 1px solid  #0A66C2;
     }
 }
-.span-agreement{
+.span-agreement-login{
     text-align: center;
     align-items: center;
 }
-.forgot-password{
+.forgot-password-login{
     // padding: 10px;
     text-align: left;
     a{
         color: #0A66C2;
     }
 }
-.join-form__form-body-agreement{
+.join-form__form-body-agreement-login{
     padding: 10px;
     text-align: center;
     font-size: 12px;
 }
 
-.link-to-signin{
+.link-to-signin-login{
     color: #0A66C2;
 }
 
-.link-to-signin:hover{
+.link-to-signin-login:hover{
     cursor: pointer;
 }
 
-.footer{
+.footer-login{
     position: absolute;
     right: 0;
     bottom: 0;
@@ -143,14 +160,14 @@ body{
     // align-items: center;
     padding: 10px;
 
-    .footer-component{
+    .footer-component-login{
         display: flex;
         flex-direction: row;
         justify-content: center;
     }
 
     @media screen and (max-width: 420px) {
-        .footer-component{
+        .footer-component-login{
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -159,7 +176,7 @@ body{
 
 }
 
-.left{
+.left-login{
     // justify-content: center;
     margin-top: 2px;
     display: flex;
@@ -176,11 +193,11 @@ body{
     }
 }
 
-.center-right{
+.center-right-login{
     display: flex;
 }
 
-.center{
+.center-login{
     justify-content: center;
     a{
         margin-left: 10px;
@@ -193,7 +210,7 @@ body{
     }
 }
 
-.right{
+.right-login{
     justify-content: center;
     a{
         margin-left: 10px;
@@ -207,25 +224,25 @@ body{
 }
 
 @media screen and (max-width: 420px) {
-    .center{
+    .center-login{
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
-    .right{
+    .right-login{
         display: flex;
         flex-direction: column;
         justify-content: center;
     
     }
-    .center-right{
+    .center-right-login{
         display: flex;
         flex-direction: row;
     }
-    .form-container{
+    .form-container-login{
         max-width: 320px;
     }
-    .form-component{
+    .form-component-login{
         width: 300px;
     }
 }

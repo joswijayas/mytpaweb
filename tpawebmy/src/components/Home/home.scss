@@ -1,0 +1,63 @@
+@import "../../styles/_variable.scss";
+.top-0-home{
+    top:0;
+    // height: 100vh;
+    width: 100vw;
+}
+
+#root{
+    top: 0;
+}
+
+.home-all-component{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;    
+}
+
+.create-post-component{
+    display: flex;
+    flex-direction: row;
+    img{
+        aspect-ratio: 1/1;
+        width: 50px;
+        width: 50px;
+        border-radius: 100%;
+    }
+    img:hover{
+        cursor: pointer;
+    }
+}
+
+.create-post-button{
+    border-radius: 100px;
+    border-color: $grey-accent;
+    color: $grey-accent;
+}
+
+.create-post-button:hover{
+    border-color: $grey-accent;
+    background-color: rgb(243, 243, 243);
+}
+
+.exp-desc-c{
+    height: 100px;
+}
+
+.bottom-popup{
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.preview-img{
+    margin-top: 30px;
+    border-radius: 15px;
+}
+
+.preview-vidio{
+    margin-top: 30px;
+    border-radius: 15px;
+}

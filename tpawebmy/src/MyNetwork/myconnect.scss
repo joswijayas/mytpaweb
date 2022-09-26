@@ -1,0 +1,35 @@
+@import "../styles/variable.scss";
+
+.connect-box{
+    background-color: $primary-light;
+    max-width: fit-content;
+    margin: 10px;
+    align-items: center;
+    display: flex;
+    border-radius: 10px;
+    font-size: 13px;
+    overflow: auto;
+}
+p{
+    margin-top: -12px;
+}
+
+.connect-box-left{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+}
+.connect-box-photoProfile{
+    img{
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        aspect-ratio: 1/1;
+    }
+}
+
+.connect-box-detail{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
