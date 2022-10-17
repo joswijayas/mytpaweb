@@ -1,12 +1,36 @@
-import React from 'react'
+import { useQuery } from '@apollo/client'
+import React, {useEffect} from 'react'
 import NavbarComponent from '../components/navigationbar/navbarcomponent/NavbarComponent'
+import { UseCurrentUser } from '../Context/UserContext'
+import { QUERY_GET_NOTIF } from '../getquery'
+import NotifComponent from './NotifComponent'
 import "./notification.scss"
 const Notification = () => {
+  const {getUser} = UseCurrentUser()
+  const {loading: loadingUN, error: errorUN, data: dataUN, refetch: UNRefetch, startPolling} = useQuery(QUERY_GET_NOTIF, {variables : {toUserId: getUser().id},})
+  
+  useEffect(()=>{
+    startPolling(500)
+  })
+  
+  if(loadingUN){
+    return <h1>Fetching...</h1>
+  }
+  console.log(dataUN)
+
   return (
     <div className='top-0-home'>
         <NavbarComponent/>
         <div className="notification">
-          <h1>Notification</h1>
+          <div className="notif">
+                {
+                  dataUN.userNotification.length === 0 ?
+                  <h1>No notification</h1>:
+                  dataUN.userNotification.map((e:any)=>{
+                    return <NotifComponent props={e} fetch={UNRefetch}/>
+                  })
+                }
+          </div>
         </div>
         <footer className='footer-register-profile'>
             <div className="footer-component-register">

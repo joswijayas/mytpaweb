@@ -54,7 +54,15 @@ func main() {
 	db.AutoMigrate(&model.Connection{})
 	db.AutoMigrate(&model.Job{})
 	db.AutoMigrate(&model.Post{})
-	
+	db.AutoMigrate(&model.LinkResetPassword{})
+	db.AutoMigrate(&model.Comment{})
+	db.AutoMigrate(&model.LikeComment{})
+	db.AutoMigrate(&model.LikePosts{})
+	db.AutoMigrate(&model.Hashtag{})
+	db.AutoMigrate(&model.Notification{})
+	db.AutoMigrate(&model.Room{})
+	db.AutoMigrate(&model.Message{})
+	// db.AutoMigrate(&model.ForgetCode{})
 	c := generated.Config{Resolvers: &graph.Resolver{
 		DB: db,
 	}}

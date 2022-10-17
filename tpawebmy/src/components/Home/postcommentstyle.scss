@@ -1,0 +1,52 @@
+@import "../../styles/_variable.scss";
+.post-comment-template{
+    // position: absolute;
+    // z-index: 1000;
+    // y-index: 1000;
+    background-color: $primary-light;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    // min-height: 200px;
+}
+
+.post-comment-img{
+        aspect-ratio: 1/1;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+}
+
+.post-comment-img:hover{
+    cursor: pointer;
+}
+
+.post-comment-template{
+    display: flex;
+    flex-direction: row;
+}
+
+.comment-right{
+    margin-left: 10px;
+}
+
+.comment-right-upper{
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-right-upper:hover{
+    cursor: pointer;
+}
+
+.icon-comment{
+    display: flex;
+    flex-direction: row;
+}
+.count{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.icons:hover{
+    cursor: pointer;
+}

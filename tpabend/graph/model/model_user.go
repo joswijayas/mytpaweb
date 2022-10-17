@@ -40,6 +40,10 @@ type User struct {
 	ConnectionRequest []*ConnectionRequest  `json:"ConnectionRequest" gorm:"foreignKey:SenderID;foreignKey:ReceiverID"`
 	Comment              []*Comment           `json:"Comment" gorm:"foreignKey:CommenterID;"`
 	LikeComment          []*LikeComment       `json:"LikeComment" gorm:"foreignKey:UserID"`
+	Visits               []*User              `json:"Visit" gorm:"many2many:user_visits"`
+	Follows              []*User              `json:"Follow" gorm:"many2many:user_follows"`
+	Block                []*User              `json:"Block" gorm:"many2many:user_blocks"`
+	// Notification         []*Notification      `json:"Notification" gorm:"foreignKey:FromUserID;foreignKey:ToUserID"`
 }
 
 type Connection struct {

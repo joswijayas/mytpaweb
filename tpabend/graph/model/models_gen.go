@@ -6,6 +6,21 @@ import (
 	"time"
 )
 
+type Block struct {
+	UserID  string `json:"userId"`
+	BlockID string `json:"blockId"`
+}
+
+type Follow struct {
+	UserID   string `json:"userId"`
+	FollowID string `json:"followId"`
+}
+
+type Hashtag struct {
+	ID      string `json:"id"`
+	Hashtag string `json:"hashtag"`
+}
+
 type Job struct {
 	ID          string    `json:"id"`
 	Title       string    `json:"title"`
@@ -16,6 +31,11 @@ type Job struct {
 	Description string    `json:"description"`
 	Creator     string    `json:"creator"`
 	TimeStamp   time.Time `json:"timeStamp"`
+}
+
+type LinkResetPassword struct {
+	ID    string `json:"id"`
+	Email string `json:"email"`
 }
 
 type NewJob struct {
@@ -32,6 +52,11 @@ type NewLink struct {
 	UserID string `json:"userID"`
 }
 
+type Search struct {
+	Users []*User `json:"Users"`
+	Posts []*Post `json:"Posts"`
+}
+
 type UpdateUser struct {
 	Name      string  `json:"name"`
 	FirstName string  `json:"firstName"`
@@ -40,4 +65,9 @@ type UpdateUser struct {
 	Headline  *string `json:"headline"`
 	Position  *string `json:"position"`
 	Region    *string `json:"region"`
+}
+
+type Visit struct {
+	UserID  string `json:"userId"`
+	VisitID string `json:"visitId"`
 }

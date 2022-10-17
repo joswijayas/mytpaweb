@@ -42,6 +42,8 @@ function PendingConnectionRequest (props: any) {
     useEffect(()=>{
         props.fetch()
     }, [])
+
+    console.log(props.item)
     return (
     <>
         <div className="home-left-container">
@@ -60,6 +62,7 @@ function PendingConnectionRequest (props: any) {
             <div className="home-left-card-detail">
                 <p onClick={()=>{navigate(`/MainPage/Profile/${props.item.sender.id}`)}}>{props.item.sender.name}</p>
                 <p onClick={()=>{navigate(`/MainPage/Profile/${props.item.sender.id}`)}}>{props.item.sender.email}</p>
+                <p>{props.item.message}</p>
                 <div className="button-pending-request">
                     <button className = "accept" onClick={handleAcceptConnection}>Accept</button>
                     <button className = "ignore" onClick={handleIgnoreConnection}>Ignore</button>

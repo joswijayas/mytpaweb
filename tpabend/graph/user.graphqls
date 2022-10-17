@@ -31,13 +31,28 @@ type User {
   Educations: [Education!]! @goField(forceResolver: true)
   Connections: [Connection!]! @goField(forceResolver: true)
   ConnectionRequests: [ConnectionRequest!]! @goField(forceResolver: true)
+  Visits: [Visit!]! @goField(forceResolver: true)
+  Follows: [Follow!]! @goField(forceResolver: true)
+  Blocks: [Block!] @goField(forceResolver: true)
+}
+
+type Visit {
+    userId:ID!
+    visitId:ID!
+}
+
+type Follow{
+    userId:ID!
+    followId:ID!
 }
 
 type Query {
   user(id: ID!): User!
   users: [User!]!
   mine: User! 
+  
   protected: String! @goField(forceResolver: true) @auth
+  UserSuggestion(userId: ID!) : [User!]!
 }
 
 type Mutation {
@@ -48,6 +63,11 @@ type Mutation {
   updateAbout(id: ID!,  about: String!): Any! @auth
   updateImage(id: ID!, profilePicture: String!): Any!
   updateBgImage(id: ID!, backgroundPicture: String!): Any!
+  # resetPassword(id: ID!, newPass: String!): Any!
+  resetPassword(email: String!, newPassword: String!): Any!
+  FollowUser(id1: ID!, id2: ID!): Any!  
+  UnFollowUser(id1: ID!, id2: ID!): Any!  
+  VisitUser(id1: ID!, id2: ID!): Any! 
 }
 
 input NewUser{

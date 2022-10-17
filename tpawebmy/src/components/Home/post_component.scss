@@ -1,0 +1,128 @@
+@import "../../styles/_variable.scss";
+
+.post-container{
+    width: 400px;
+    margin-top: 50px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 270px;
+    height: fit-content;
+    background-color: $secondary-color;
+}
+
+.post-main{
+    img{
+        // margin-top: 3px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 15px;
+        aspect-ratio: 1/1;
+        width: 400px;
+    }
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.post-container-header{
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    .post-photo-profile{
+        aspect-ratio: 1/1;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+    h4{
+        margin-left: 10px;
+        margin-top: -0.2px;
+    }
+    .post-container-detail{
+        margin-top: -5px;
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.post-container-header-hover{
+    background-color: $secondary-color;
+    border-radius: 10px;
+    position: absolute;
+    margin-left: -230px;
+    width: 230px;
+    box-shadow: 2px 2px rgb(219, 219, 219);
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    .post-photo-profile-hover{
+        aspect-ratio: 1/1;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+    h4{
+        margin-left: 10px;
+        margin-top: -0.2px;
+    }
+    .post-container-detail-hover{
+        margin-top: -5px;
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.post-container-header:hover{
+    cursor: pointer;
+    .post-container-header-hover{
+        position: absolute;
+    }
+}
+
+.post-main{
+    .post-main-vidios{
+        width: 400px;
+        height: 100%;
+    }
+
+}
+.post-main-desc{
+    padding: 10px;
+}
+
+.post-footer{
+    padding: 10px;
+}
+
+.testers{
+    display: flex;
+    flex-direction: row;
+}
+
+.main-home{
+    display: flex;
+    flex-direction: row;
+}
+.icon{
+    svg{
+        margin: 10px;
+    }
+    svg:hover{
+        cursor: pointer;
+    }
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.bold{
+    font-weight: 600;
+}
+
+.headline{
+    font-size: 12px;
+    margin-top: -8px
+}

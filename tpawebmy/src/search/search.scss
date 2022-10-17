@@ -1,0 +1,66 @@
+@import "../styles/_variable.scss";
+.search{
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-filter{
+    button{
+        margin: 10px;
+        color: white;
+        background-color: $accent-blue;
+    }
+}
+
+.search-box{
+    background-color: $secondary-color;
+    width: 350px;
+    margin: 10px;
+    align-items: center;
+    display: flex;
+    border-radius: 10px;
+    font-size: 13px;
+    overflow: auto;
+}
+p{
+    margin-top: -12px;
+}
+
+.search-box-left{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+}
+.search-box-right{
+    button{
+        background-color: $accent-blue;
+        color: $secondary-color;
+    }
+}
+.infinity-scrolling{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.see-more{
+    background-color: $accent-blue;
+    color: $secondary-color;
+}
+
+.search-box-photoProfile{
+    img{
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        aspect-ratio: 1/1;
+    }
+}
+
+.search-box-detail{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}

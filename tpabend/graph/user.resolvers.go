@@ -10,6 +10,7 @@ import (
 	"tpabend/bendtpa/graph/generated"
 	"tpabend/bendtpa/graph/model"
 	"tpabend/bendtpa/service"
+	"tpabend/bendtpa/tools"
 )
 
 // RegisterUser is the resolver for the registerUser field.
@@ -48,6 +49,39 @@ func (r *mutationResolver) UpdateBgImage(ctx context.Context, id string, backgro
 	return service.UpdateBackgroundImage(ctx, id, backgroundPicture)
 }
 
+// ResetPassword is the resolver for the resetPassword field.
+func (r *mutationResolver) ResetPassword(ctx context.Context, email string, newPassword string) (interface{}, error) {
+	user := new(model.User)
+	link := new(model.LinkResetPassword)
+
+	if err := r.DB.First(user, "email = ?", email).Error; err != nil {
+		panic(err)
+	}
+
+	if err := r.DB.Delete(link, "email = ?", email).Error; err != nil {
+		panic(err)
+	}
+
+	user.Password = tools.HashPassword(newPassword)
+
+	return user, r.DB.Save(user).Error
+}
+
+// FollowUser is the resolver for the FollowUser field.
+func (r *mutationResolver) FollowUser(ctx context.Context, id1 string, id2 string) (interface{}, error) {
+	return service.FollowUser(ctx, id1, id2)
+}
+
+// UnFollowUser is the resolver for the UnFollowUser field.
+func (r *mutationResolver) UnFollowUser(ctx context.Context, id1 string, id2 string) (interface{}, error) {
+	return service.UnfollowUser(ctx, id1, id2)
+}
+
+// VisitUser is the resolver for the VisitUser field.
+func (r *mutationResolver) VisitUser(ctx context.Context, id1 string, id2 string) (interface{}, error) {
+	return service.VisitUser(ctx, id1, id2)
+}
+
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
 	log.Print("ajjajajajajaj")
@@ -69,6 +103,11 @@ func (r *queryResolver) Protected(ctx context.Context) (string, error) {
 	return "success", nil
 }
 
+// UserSuggestion is the resolver for the UserSuggestion field.
+func (r *queryResolver) UserSuggestion(ctx context.Context, userID string) ([]*model.User, error) {
+	return service.UserSuggestion(ctx, userID)
+}
+
 // Experiences is the resolver for the Experiences field.
 func (r *userResolver) Experiences(ctx context.Context, obj *model.User) ([]*model.Experience, error) {
 	print("experience resolverr")
@@ -88,6 +127,21 @@ func (r *userResolver) Connections(ctx context.Context, obj *model.User) ([]*mod
 // ConnectionRequests is the resolver for the ConnectionRequests field.
 func (r *userResolver) ConnectionRequests(ctx context.Context, obj *model.User) ([]*model.ConnectionRequest, error) {
 	return service.GetConnectionRequest(ctx, obj)
+}
+
+// Visits is the resolver for the Visits field.
+func (r *userResolver) Visits(ctx context.Context, obj *model.User) ([]*model.Visit, error) {
+	return service.GetVisits(ctx, obj)
+}
+
+// Follows is the resolver for the Follows field.
+func (r *userResolver) Follows(ctx context.Context, obj *model.User) ([]*model.Follow, error) {
+	return service.GetFollows(ctx, obj)
+}
+
+// Blocks is the resolver for the Blocks field.
+func (r *userResolver) Blocks(ctx context.Context, obj *model.User) ([]*model.Block, error) {
+	return service.GetBlocks(ctx, obj)
 }
 
 // Mutation returns generated.MutationResolver implementation.

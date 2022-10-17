@@ -13,7 +13,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;    
+    justify-content: center;
+    margin-top: 20px; 
 }
 
 .create-post-component{
@@ -51,7 +52,9 @@
     justify-content: space-around;
     
 }
-
+.error-message{
+    color: red;
+}
 .preview-img{
     margin-top: 30px;
     border-radius: 15px;
@@ -60,4 +63,12 @@
 .preview-vidio{
     margin-top: 30px;
     border-radius: 15px;
+}
+
+.create-comment-profile-picture{
+
+}
+
+.mention{
+    min-height: 0px;
 }

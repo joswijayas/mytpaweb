@@ -1,12 +1,14 @@
 import React from 'react'
 import NavbarComponent from '../components/navigationbar/navbarcomponent/NavbarComponent'
+import CreateMessageRoom from './CreateMessageRoom'
 import "./message.scss"
 const Message = () => {
   return (
     <div className='top-0-home'>
         <NavbarComponent/>
         <div className="message">
-          <h1>Message</h1>
+          <h3>Create message to your friend🥳</h3>
+          <CreateMessageRoom/>
         </div>
         <footer className='footer-register-profile'>
             <div className="footer-component-register">

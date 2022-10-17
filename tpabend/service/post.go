@@ -36,11 +36,11 @@ func LikePost(ctx context.Context, postID string, userID string)(*model.LikePost
 
 func UnlikePost(ctx context.Context, postID string, userID string)(*model.LikePosts, error){
 	db := database.GetDB()
-	likePost := new(model.LikePosts)
-	if err := db.Find(likePost, "post_id = ? AND user_id = ?", postID, userID).Error; err!=nil{
+	likepost := new(model.LikePosts)
+	if err := db.Find(likepost, "post_id = ? AND user_id = ?", postID, userID).Error; err!=nil{
 		return nil, err
 	}
-	return likePost, db.Delete(LikePost, "post_id = ? AND user_id = ?", postID, userID).Error
+	return likepost, db.Delete(likepost, "post_id = ? AND user_id = ?", postID, userID).Error
 }
 
 func GetLikes(ctx context.Context, obj *model.Post)([]*model.LikePosts, error){
@@ -51,7 +51,7 @@ func GetLikes(ctx context.Context, obj *model.Post)([]*model.LikePosts, error){
 	}
 
 	return likePost, nil
-}
+} 
 
 func GetComments(ctx context.Context, obj *model.Post) ([]*model.Comment, error) {
 	var modelComment []*model.Comment
@@ -68,6 +68,18 @@ func GetPosts(ctx context.Context, limit int, offset int, userIDs string) ([]*mo
 	var userConnectIdList []string
 	userID := userIDs
 	userConnectIdList = append(userConnectIdList, userID)
+
+	var follows []*model.Follow
+
+	if err := db.Table("user_follows").Find(&follows, "user_id = ?", userID).Error; err != nil {
+		return nil, err
+	}
+
+	followIds := lo.Map(follows, func(x *model.Follow, _ int) string {
+		return x.FollowID
+	})
+
+	userConnectIdList = append(userConnectIdList, followIds...)
 
 	var connections1 []*model.Connection
 	var connections2 []*model.Connection

@@ -7,6 +7,8 @@ import Message from './message/Message'
 import Network from './MyNetwork/Network'
 import Notification from './notification/Notification'
 import Profile from './Profile/Profile'
+import SearchPage from './search/SearchPage'
+import SearchPageHastag from './search/SearchPageHastag'
 
 const MainPage = () => {
   return (
@@ -19,6 +21,8 @@ const MainPage = () => {
             <Route path="/jobs" element={<MyJob/>}/>
             <Route path="/messages" element={<Message/>}/>
             <Route path="/notifications" element={<Notification/>}/>
+            <Route path="/search/:keyword" element={<SearchPage/>}/>
+            <Route path="/SearchTags/:keyword" element={<SearchPageHastag/>}/>
         </Routes>
     </UserProvider>
   )

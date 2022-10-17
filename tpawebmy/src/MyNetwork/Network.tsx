@@ -4,18 +4,23 @@ import AllNavbar from '../components/navigationbar/AllNavbar'
 import NavbarComponent from '../components/navigationbar/navbarcomponent/NavbarComponent'
 import { UseCurrentUser } from '../Context/UserContext'
 import { GET_USER } from '../getquery'
-import { QUERY_GET_CONNECTIONS, QUERY_PENDING_OR_NO } from '../queris'
+import { QUERY_GET_CONNECTIONS, QUERY_PENDING_OR_NO, QUERY_U_MIGHT_KNOW } from '../queris'
 import MyConnection from './MyConnection'
 import './network.scss'
 import PendingConnectionRequest from './PendingConnectionRequest'
+import UserYouMightKnow from './UserYouMightKnow'
 const Network = () => {
     const {getUser} = UseCurrentUser()
     const [rightView, setRightView] = useState(false)
+    const [umk, setUMK] = useState(false)
     const {loading: loadingPON, error: errorPON, data: dataPON, refetch: PONRefetch} = useQuery(QUERY_PENDING_OR_NO, {variables : {id: getUser().id},})
     const {loading: loadingCon, error: errorCon, data: dataCon, refetch: ConRefetch} = useQuery(QUERY_GET_CONNECTIONS, {variables : {id: getUser().id},})
-    if(loadingPON || loadingCon){
+    const {loading: loadingUmk, error: errorUmk, data: dataUmk, refetch: UmkRefetch} = useQuery(QUERY_U_MIGHT_KNOW, {variables : {userId: getUser().id},})
+    if(loadingPON || loadingCon || loadingUmk){
         return <h1>Fetching...</h1>
     }
+
+    // console.log(dataUmk.UserSuggestion)
 
     // console.log(dataCon.user.Connections)
 
@@ -25,19 +30,27 @@ const Network = () => {
         <NavbarComponent/>
         <div className="main-network">
             <div className="network-left">
-                <h3 className='pending-connect' onClick={()=>setRightView(false)}>Pending Connection Request</h3>
-                <h3 className='my-connect' onClick={()=>{setRightView(true)}}>My Connections</h3>
+                <h3 className='pending-connect' onClick={()=>{setRightView(false); setUMK(false)}}>Pending Connection Request</h3>
+                <h3 className='my-connect' onClick={()=>{setRightView(true); setUMK(false)}}>My Connections</h3>
+                <h3 className='my-connect' onClick={()=>{setUMK(true)}}>User you might now</h3>
+
             </div>
             <div className="network-right">
                 {
-                    rightView == false ? 
+                    rightView == false && umk == false ? 
                     dataPON.user.ConnectionRequests.map((e:any)=>{
                         return <PendingConnectionRequest item={e} fetch={PONRefetch}/>
                     }) :
+                    umk == false?
                     dataCon.user.Connections.map((e:any)=>{
                         return <MyConnection item={e} fetch={ConRefetch}/>
+                    }) : 
+                    dataUmk.UserSuggestion.map((e:any)=>{
+                        console.log(e)
+                        return <UserYouMightKnow props={e} fetch={UmkRefetch}/> 
                     })
                 }
+
             </div>
         </div>
         <footer className='footer-register-profile'>

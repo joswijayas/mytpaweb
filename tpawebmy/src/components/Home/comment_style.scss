@@ -1,0 +1,29 @@
+.create-comment-profile-picture{
+    aspect-ratio: 1/1;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+}
+
+.create-comment{
+    padding: 2px;
+    min-height: 100px;
+    display: flex;
+    // justify-content:;
+    button{
+        height: 40px;
+        // margin-top: 
+    }
+    input{
+        width: 250px;
+        border-radius: 20px;
+    }
+    #create-comment-input{
+        border-radius: 30px;
+        background-color: red;
+        overflow: hidden;
+    }
+}
+.see-more{
+    margin-top: 2px;
+}

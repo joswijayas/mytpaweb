@@ -3,7 +3,7 @@ import '../styles/login.scss'
 import logo from '../assets/logo.png'
 import { useMutation, useQuery } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
-import { QUERY_LOGIN } from '../queris'
+import { QUERY_LOGIN, QUERY_SEND_EMAIL_RESET_PASSWORD } from '../queris'
 import { UseCurrentUser } from '../Context/UserContext'
 import { GET_USER } from '../getquery'
 const ForgotPassword = () => {
@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     }
   }
   const navigate = useNavigate()
-
+  const [functionSendEmail, {data: dataSE, loading: loadingSE, error: errorSE}] = useMutation(QUERY_SEND_EMAIL_RESET_PASSWORD)
 
   const loginClick = ()=>{
     if(email == ""){
@@ -88,6 +88,22 @@ const ForgotPassword = () => {
     navigate('/MainPage')
   }
 
+  const handleSendEmail= ()=>{
+    functionSendEmail({
+      variables: {
+        email: email
+      }
+    }).catch((error)=>{
+      console.log(error.message)
+      setErrorMessage(error.message)
+    })
+  }
+
+  if(localStorage.getItem("token")){
+    console.log('hahahahah')
+    navigate('/MainPage')
+  }
+
   return (
     <div className="main-login">
       <div className="header-login">
@@ -107,10 +123,10 @@ const ForgotPassword = () => {
             
             
             <div className="button-login">
-              <button onClick={loginClick}
+              <button onClick={handleSendEmail}
                 type="button"
                 >
-                  Reset Password
+                  Send Email
               </button>
               
             </div>
@@ -194,18 +210,18 @@ const ForgotPassword = () => {
           </div>
           <div className="center-right-login">
             <div className="center-login">
-                <a target="#" href="">About</a>
-                <a target="#" href="">Accessbility</a>
+                <a target="#" href="https://about.linkedin.com/?trk=seo-authwall-base_footer-about">About</a>
+                <a target="#" href="https://www.linkedin.com/accessibility?trk=seo-authwall-base_footer-accessibility">Accessbility</a>
                 <a target="#" href="https://www.linkedin.com/legal/user-agreement?trk=registration-frontend_join-form-user-agreement">User Agreement</a>
-                <a target="https://www.linkedin.com/legal/privacy-policy?trk=registration-frontend_join-form-privacy-policy" href="">Privacy Policy</a>
-                <a target="https://www.linkedin.com/legal/cookie-policy?trk=registration-frontend_join-form-cookie-policy" href="">Cookie Policy</a>
+                <a target="#" href="https://www.linkedin.com/legal/privacy-policy?trk=seo-authwall-base_footer-privacy-policy">Privacy Policy</a>
+                <a target="#" href="https://www.linkedin.com/legal/cookie-policy?trk=seo-authwall-base_footer-cookie-policy">Cookie Policy</a>
             </div>
             <div className="right-login">
-                <a target="#" href="">Copyright Policy</a>
-                <a target="#" href="">Brand Policy</a>
-                <a target="#" href="">Guest Controls</a>
-                <a target="#" href="">Community Guidelines</a>
-                <a target="#" href="">Language</a>
+                <a target="#" href="https://www.linkedin.com/legal/copyright-policy?trk=seo-authwall-base_footer-copyright-policy">Copyright Policy</a>
+                <a target="#" href="https://brand.linkedin.com/policies?trk=seo-authwall-base_footer-brand-policy">Brand Policy</a>
+                <a target="#" href="https://www.linkedin.com/psettings/guest-controls?trk=seo-authwall-base_footer-guest-controls">Guest Controls</a>
+                <a target="#" href="https://www.linkedin.com/legal/professional-community-policies?trk=seo-authwall-base_footer-community-guide">Community Guidelines</a>
+                <a target="#" href="https://google.com">Language</a>
             </div>
           </div>
         </div>

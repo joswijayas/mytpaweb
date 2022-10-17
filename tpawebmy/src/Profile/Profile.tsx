@@ -5,13 +5,15 @@ import NavbarComponent from '../components/navigationbar/navbarcomponent/NavbarC
 import Education from './Education'
 import Experience from './Experience'
 import { UseCurrentUser } from '../Context/UserContext'
-import { GET_USER } from '../getquery'
-import { QUERY_ADD_EDUCATION, QUERY_ADD_EXPERIENCE, QUERY_CONNECT_REQUEST, QUERY_DELETE_CONNECTION_REQUEST, QUERY_GET_CONNECTIONS, QUERY_GET_EDUCATION, QUERY_GET_EXPERIENCE, QUERY_GET_USER, QUERY_PENDING_OR_NO, QUERY_UPDATE_ABOUT, QUERY_UPDATE_BACKGROUND_IMG, QUERY_UPDATE_PROFILE, QUERY_UPDATE_PROFILE_IMG } from '../queris'
+import { GET_USER, QUERY_ADD_NOTIF } from '../getquery'
+import { QUERY_ADD_EDUCATION, QUERY_ADD_EXPERIENCE, QUERY_ADD_VISITS, QUERY_CONNECT_REQUEST, QUERY_DELETE_CONNECTION_REQUEST, QUERY_FOLLOW, QUERY_GET_CONNECTIONS, QUERY_GET_EDUCATION, QUERY_GET_EXPERIENCE, QUERY_GET_USER, QUERY_GET_USER_FOLLOW, QUERY_GET_USER_VISITS, QUERY_PENDING_OR_NO, QUERY_UNFOLLOW, QUERY_UPDATE_ABOUT, QUERY_UPDATE_BACKGROUND_IMG, QUERY_UPDATE_PROFILE, QUERY_UPDATE_PROFILE_IMG } from '../queris'
 import '../styles/profile.scss'
 import "../styles/_variable.scss";
 import { storage } from '../firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { updateDoc } from '@firebase/firestore'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
 const Profile = () => {
   const {getUser} = UseCurrentUser()
@@ -31,6 +33,9 @@ const Profile = () => {
   const [functionAddEducation, {data: dataEdu, loading: loadingEdu, error: errorEdu}] = useMutation(QUERY_ADD_EDUCATION)
   const [functionConnectRequest, {data: dataCR, loading: loadingCR, error: errorCR}] = useMutation(QUERY_CONNECT_REQUEST)
   const [functionDeleteConnectRequest, {data: dataDCR, loading: loadingDCR, error: errorDCR}] = useMutation(QUERY_DELETE_CONNECTION_REQUEST)
+  const [functionFollow, {data: dataF, loading: loadingF, error: errorF}] = useMutation(QUERY_FOLLOW)
+  const [functionUnfollow, {data: dataUnf, loading: loadingUnf, error: errorUnf}] = useMutation(QUERY_UNFOLLOW)
+  const [functionVisit, {data: dataAV, loading: loadingAV, error: errorAV}] = useMutation(QUERY_ADD_VISITS)
   const paramsID = useParams()
   const {loading: loadingV, error: errorV, data: dataV, called, refetch : currentUserRefecth} = useQuery(QUERY_GET_USER, {variables : {id: paramsID.id},})
   const {loading: loadingGetExp, error: errorGetExp, data: dataGetExp, refetch : expRefetch} = useQuery(QUERY_GET_EXPERIENCE, {variables : {id: paramsID.id},})
@@ -38,20 +43,34 @@ const Profile = () => {
   const {loading: loadingUserID, error: errorUserID, data: dataUserID, refetch: userIDRefetch} = useQuery(QUERY_GET_USER, {variables : {id: paramsID.id},})
   const {loading: loadingPON, error: errorPON, data: dataPON, refetch: PONRefetch} = useQuery(QUERY_PENDING_OR_NO, {variables : {id: paramsID.id},})
   const {loading: loadingCon, error: errorCon, data: dataCon, refetch: ConRefetch} = useQuery(QUERY_GET_CONNECTIONS, {variables : {id: getUser().id},})
+  const {loading: loadingUF, error: errorUF, data: dataUF, refetch: UFRefetch} = useQuery(QUERY_GET_USER_FOLLOW, {variables : {id: getUser().id},})
+  const {loading: loadingIF, error: errorIF, data: dataIF, refetch: IFRefetch} = useQuery(QUERY_GET_USER_FOLLOW, {variables : {id: paramsID.id},})
+  const {loading: loadingUV, error: errorUV, data: dataUV, refetch: UVRefetch} = useQuery(QUERY_GET_USER_VISITS, {variables : {id: paramsID.id},})
   const {checkLoginToken, setUserToLocalStorage, setUserToLocalStorageAfterRefetch} = UseCurrentUser()
   const [viewUpdateProfileImg, setUpdateProfileImg] = useState(false)
   const [viewUpdateBgImage, setUpdateBgImage] = useState(false)
   const [viewEditProfile, setViewEditProfile] = useState(false)
   const [viewCancelPending, setViewCancelPending] = useState(false)
-
+  const [functionAddNotif, {data: dataAN, loading: loadingAN, error: errorAN}] = useMutation(QUERY_ADD_NOTIF)
+  
   // console.log(paramsID.id)
-  if(loadingUserID || loadingPON || loadingCon){
+  if(paramsID.id != getUser().id){
+    functionVisit({
+      variables:{
+        "id1": getUser().id,
+        "id2": paramsID.id
+      }
+    }).then(()=>{
+      UVRefetch()
+    })
+  }
+  if(loadingUserID || loadingPON || loadingCon || loadingV || loadingUF || loadingIF || loadingUV){
     return <h1>Fetching...</h1>
   }
   if(getUser() == null){
     return <h1>Fetching...</h1>
   }
-  console.log((dataCon.user.Connections.filter((e:any)=>e.user1.id === paramsID.id)).length > 0 || (dataCon.user.Connections.filter((e:any)=>e.user2.id === paramsID.id)).length > 0)
+  // console.log((dataCon.user.Connections.filter((e:any)=>e.user1.id === paramsID.id)).length > 0 || (dataCon.user.Connections.filter((e:any)=>e.user2.id === paramsID.id)).length > 0)
   // console.log(dataUserID.user)
   // console.log(dataPON.user.ConnectionRequests)
   // console.log((dataPON.user.ConnectionRequests.filter((e:any)=>e.sender.id === getUser().id)).length > 0)
@@ -65,6 +84,7 @@ const Profile = () => {
   if(loadingEd){
     return <h1>Fetching...</h1>
   }
+  // console.log(dataUV.user.Visits.length)
 
   // useEffect(()=>{
   //   // PONRefetch()
@@ -216,9 +236,6 @@ const Profile = () => {
       }else if(mEnd == 12){
         mEndName = "December"
       }
-
-      
-
 
       const input = {
         "userId": getUser().id,
@@ -725,6 +742,62 @@ const Profile = () => {
     )
   }
 
+  const handleGetPDF = ()=>{
+    console.log("get pdf")
+    const input = document.getElementById('main-profile');
+        const hideModal = document.getElementById('hide') as HTMLElement
+        // hideModal.style.display = 'none'
+        const pdf = new jsPDF();
+        var width = pdf.internal.pageSize.getWidth();
+        var height = pdf.internal.pageSize.getHeight();
+        html2canvas(input as HTMLElement)
+            .then((canvas) => {
+                const imgData = canvas.toDataURL('image/png', 100);
+                const imgDatas = canvas.toDataURL('image/jpg', 100);
+                const imgDatass = canvas.toDataURL('image/jpeg', 100);
+                pdf.addImage(imgData, 'JPEG', 0, 0, width, height);
+                pdf.addImage(imgDatas, 'JPEG', 0, 0, width, height);
+                pdf.addImage(imgDatass, 'JPEG', 0, 0, width, height);
+                // pdf.addImage(imgData, 'JPEG', 0, 0, width, height);
+                // pdf.output('dataurlnewwindow');
+                pdf.save(`${userData().name.concat(".pdf")}`);
+                // hideModal.style.display = 'block'
+            });
+  }
+  // console.log(dataIF)
+  const handleFollow = ()=>{
+      functionFollow({
+        variables:{
+          "id1": getUser().id,
+          "id2": paramsID.id
+        }
+      }).then(()=>{
+        IFRefetch()
+      }).then(()=>{
+        functionAddNotif({
+          variables:{
+              toUserId: paramsID.id,
+              fromUserId: getUser().id,
+              message: ' has followed you!'
+          }
+      })
+      })
+  }
+
+  const handleUnfollow = ()=>{
+    functionUnfollow({
+      variables:{
+        "id1": getUser().id,
+        "id2": paramsID.id
+      }
+    }).then(()=>{
+      IFRefetch()
+    }).then(()=>{
+      // console.log(paramsID.ID)
+      // console.log(dataIF)
+    })
+}
+
   return (
     <div className='top-0'>
         <NavbarComponent/>
@@ -739,21 +812,21 @@ const Profile = () => {
         <ViewEditProfile/>
         <ViewCancelPending/>
         {/* <React.Fragment><EditAboutShow/></React.Fragment> */}
-        <div className="main-profile">
+        <div className="main-profile" id='main-profile'>
           <div className="left">
             <div className='profile-head'>
               <div className="profileImage">
                 {
                   getUser().id == paramsID.id ? 
                   (userData().profilePicture == "" || userData().profilePicture == undefined || userData().profilePicture == null) ?
-                    <img onClick={()=>{console.log('zzzzzz');setUpdateProfileImg(!viewUpdateProfileImg)}}src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="" className='profile-img'/>:
-                   <img onClick={()=>{setUpdateProfileImg(!viewUpdateProfileImg)}}src={userData().profilePicture} alt="" className='profile-img'/> 
+                    <img id='main-profile' onClick={()=>{console.log('zzzzzz');setUpdateProfileImg(!viewUpdateProfileImg)}}src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="" className='profile-img'/>:
+                   <img id='main-profile' onClick={()=>{setUpdateProfileImg(!viewUpdateProfileImg)}}src={userData().profilePicture} alt="" className='profile-img'/> 
                    
                    :
                    
                    (userData().profilePicture == "" || userData().profilePicture == undefined || userData().profilePicture == null) ?
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="" className='profile-img'/>:
-                   <img src={userData().profilePicture} alt="" className='profile-img'/>
+                    <img id='main-profile' src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt="" className='profile-img'/>:
+                   <img id='main-profile' src={userData().profilePicture} alt="" className='profile-img'/>
                 }
                 
                 {
@@ -780,21 +853,38 @@ const Profile = () => {
               <p>{userData().headline}</p>
               <p>{userData().position}</p>
               <p>{userData().region}</p>
+              <h4>Profile Visit: {dataUV.user.Visits.length}</h4>
               {
                 getUser().id != paramsID.id ? <> 
-                <button className = "follow" onClick={handleLogout}>Follow +</button>
+                {/* <button id='hide' className = "follow" onClick={handleFollow} >Follow +</button> */}
+                {
+                  
+                  (dataIF.user.Follows.filter((e:any)=>e.followId === paramsID.id)).length > 0 ? 
+                  <button id='hide' className = "follow" onClick={handleUnfollow} >Followed</button>:
+                  <button id='hide' className = "follow" onClick={handleFollow} >Follow +</button>
+                }
                 {
                   (dataPON.user.ConnectionRequests.filter((e:any)=>e.sender.id === getUser().id)).length > 0 ? 
-                  <button className = "connect" onClick={()=>setViewCancelPending(!viewCancelPending)}>Pending</button> :
+                  <button id='hide' className = "connect" onClick={()=>setViewCancelPending(!viewCancelPending)}>Pending</button> :
                   
                     (dataCon.user.Connections.filter((e:any)=>e.user1.id === paramsID.id)).length > 0 || (dataCon.user.Connections.filter((e:any)=>e.user2.id === paramsID.id)).length > 0 == true ?
-                    <button className = "connect">Connected</button> :
-                    <button className = "connect" onClick={handleConnectRequest}>Connect</button>
+                    <>
+                      <button id='hide' className = "connect">Connected</button>
+                      <button id='hide' className = "connect" onClick={handleGetPDF}>Get Pdf</button>
+                    </> :
+                    <>
+                      <button id='hide' className = "connect" onClick={handleConnectRequest}>Connect</button>
+                      <button id='hide' className = "connect" onClick={handleGetPDF}>Get Pdf</button>
+                    </>
                   
                 }
               </>
                 :
-                <button className = "logout" onClick={handleLogout}>Logout</button>
+                <>
+                <button id='hide' className = "logout" onClick={handleLogout}>Logout</button>
+                <button id='hide' className = "connect" onClick={handleGetPDF}>Get Pdf</button>
+                </>
+                
               }
               
             </div>

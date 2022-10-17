@@ -11,13 +11,18 @@
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@firebase/firestore": "^3.4.15",
-    "@heroicons/react": "^2.0.11",
+    "@heroicons/react": "^2.0.12",
     "@heroicons/vue": "^2.0.11",
     "emailjs-com": "^3.2.0",
     "firebase": "^9.9.4",
     "graphql": "^16.6.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.4.0",
+    "react-loader-spinner": "^5.3.4",
+    "react-mentions": "^4.4.7",
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {

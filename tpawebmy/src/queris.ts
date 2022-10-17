@@ -198,6 +198,7 @@ export const QUERY_PENDING_OR_NO = gql`
         email
         name
       }
+      message
     }
   }
 }
@@ -358,6 +359,396 @@ export const QUERY_CREATE_POST = gql`
     Sender{
       email
     }
+  }
+}
+`;
+
+export const QUERY_SEND_EMAIL_RESET_PASSWORD = gql`
+  mutation SendLinkReset($email: String!){
+    sendLinkResetPassword(email: $email)
+}`;
+
+export const QUERY_RESET_PASSWORD = gql`
+  mutation ResetPassword($email: String!, $newPassword: String!){
+    resetPassword(
+      email: $email,
+      newPassword: $newPassword
+    )
+}`;
+
+export const QUERY_GET_RESET_LINK = gql `
+  query GetResetLink($id: String!){
+    getResetLink(id: $id){
+      id
+      email
+    }
+}`;
+
+export const QUERY_GET_POST = gql`
+  query GetPosts($Limit: Int!, $Offset: Int!, $UserID: ID!){
+  Posts(Limit: $Limit, Offset: $Offset, UserID: $UserID){
+    id
+    description
+    photoUrl
+    videoUrl
+    Sender{
+      id
+      name
+      firstName
+      lastName
+      email
+      headline
+      position
+      profilePicture
+      backgroundPicture
+    }
+    Likes{
+      userId
+      postId
+    }
+    Comments{
+      id
+      postId
+    }
+    shareCount
+    timeStamp
+  }
+}
+`;
+
+export const QUERY_FOLLOW = gql`
+  mutation FollowUser($id1: ID!, $id2: ID!){
+	  FollowUser(id1: $id1, id2: $id2)
+  }
+`;
+
+export const QUERY_GET_USER_FOLLOW = gql`
+  query GetUser($id: ID!){
+  user(id: $id){
+    Follows{
+      userId
+      followId
+    }
+  }
+}
+`;
+
+export const QUERY_GET_USER_VISITS = gql`
+  query GetVisits($id: ID!){
+  user(id: $id){
+    Visits{
+			userId
+      visitId
+    }
+  }
+}`;
+
+export const QUERY_UNFOLLOW = gql`
+  mutation UnfollowUser($id1: ID!, $id2: ID!){
+	  UnFollowUser(id1: $id1, id2: $id2)
+  }
+`;
+
+export const QUERY_LIKE_POST = gql`
+  mutation LikePost($postId:ID!, $userId:ID!){
+    likePost(postId: $postId, userId: $userId){
+      userId
+      postId
+    }
+}`;
+
+export const QUERY_UNLIKE_POST = gql`
+  mutation UnlikePost($postId:ID!, $userId:ID!){
+    unlikePost(postId: $postId, userId: $userId){
+      userId
+      postId
+    }
+}`;
+
+export const QUERY_GET_VISITS = gql`
+  query GetVisit($userId: ID!){
+  user(id: $userId){
+    Visits{
+      userId
+      visitId
+    }
+  }
+}
+`;
+
+export const QUERY_ADD_VISITS = gql`
+  mutation VisitUser($id1: ID!, $id2: ID!){
+    VisitUser(id1: $id1, id2: $id2)
+}`;
+
+
+export const QUERY_SEARCH = gql`
+  query Search($Keyword: String!, $Limit: Int!, $Offset: Int!, $UserID: ID!){
+  Search(Keyword: $Keyword, Limit: $Limit, Offset: $Offset, UserID: $UserID){
+    Users{
+      id
+      name
+      email
+      password
+      firstName
+      lastName
+      pronoun
+      headline
+      position
+      region
+      about
+      profilePicture
+      backgroundPicture
+      Connections{
+        id
+      }
+    }
+    Posts{
+      id
+      description
+      photoUrl
+      videoUrl
+      Sender{
+        id
+        name
+        email
+        password
+        firstName
+        lastName
+        pronoun
+        headline
+        position
+        region
+        about
+        profilePicture
+        backgroundPicture
+        Connections{
+          id
+        }
+      }
+      Likes{
+        postId
+        postId
+      }
+      Comments{
+        id
+        postId
+      }
+      shareCount
+      
+    }
+  }
+}`;
+
+export const QUERY_SEARCH_USER = gql`
+  query SearchUser($Keyword: String!, $Limit: Int!, $Offset: Int!, $UserID: ID!){
+  SearchUser(Keyword: $Keyword, Limit: $Limit, Offset: $Offset, UserID: $UserID){
+    Users{
+      id
+      name
+      email
+      password
+      firstName
+      lastName
+      pronoun
+      headline
+      position
+      region
+      about
+      profilePicture
+      backgroundPicture
+      Connections{
+        id
+      }
+      
+    }
+ 
+  }
+}
+`;
+
+export const QUERY_SEARCH_POST = gql`
+  query SearchPosts($Keyword: String!, $Limit: Int!, $Offset: Int!){
+  SearchPost(Keyword: $Keyword, Limit: $Limit, Offset: $Offset){
+
+    Posts{
+       id
+      description
+      photoUrl
+      videoUrl
+      Sender{
+        id
+        name
+        email
+        password
+        firstName
+        lastName
+        lastName
+        pronoun
+        headline
+        position
+        profilePicture
+      }
+      Likes{
+        userId
+        postId
+      }
+      Comments{
+        id
+        postId
+      }
+      shareCount
+      timeStamp
+    }
+  }
+}
+`;
+
+export const QUERY_U_MIGHT_KNOW = gql`
+  query UserSuggestion($userId: ID!) {
+    UserSuggestion(userId: $userId) {
+      id
+      name
+      email
+      firstName
+      lastName
+      pronoun
+      headline
+      position
+      region
+      about
+      profilePicture
+      backgroundPicture
+    }   	
+}
+`;
+
+export const QUERY_GET_HASHTAGS = gql`
+  query hashtags {
+    Hashtags {
+      id
+      hashtag
+    }
+}`;
+
+export const QUERY_ADD_HASHTAG = gql`
+  mutation addHashtags($hashtag: String!) {
+    addHashtag(hashtag: $hashtag) {
+      id
+      hashtag
+    }
+}`;
+
+export const QUERY_SEARCH_HASTAG = gql`
+  query SearchHastag($Keyword: String!, $Limit: Int!, $Offset: Int!) {
+  SearchHastag(Keyword: $Keyword, Limit: $Limit, Offset: $Offset) {
+    Users {
+      id
+      name
+    }
+    
+    Posts {
+      id
+      description
+      photoUrl
+      videoUrl
+      Sender{
+        id
+        name
+        email
+        firstName
+        lastName
+        pronoun
+        headline
+        position
+        profilePicture
+
+      }
+      Comments{
+        id
+      }
+      Likes{
+        userId
+        postId
+      }
+      
+      shareCount
+      timeStamp
+    }
+  }
+}
+`;
+
+export const QUERY_ADD_COMMENT = gql`
+  mutation addComment($postId: ID!, $commentSenderId: ID!, $comment: String!) {
+  addComment(
+    postId: $postId
+    commentSenderId: $commentSenderId
+    comment: $comment
+  ) {
+    id
+    postId
+    userComment {
+      id
+      name
+      email
+    }
+    Replies {
+      id
+      replyCommentId
+    }
+    Likes {
+      id
+      commentId
+      User {
+        id
+        name
+      }
+    }
+    commentText
+    timeStamp
+  }
+}`;
+
+export const QUERY_GET_POST_COMMENTS = gql`
+  query PostComments($Limit: Int!, $Offset: Int!, $postId: ID!){
+  postComments(Limit: $Limit, Offset: $Offset, postId: $postId){
+    id
+    postId
+    userComment{
+      id
+      email
+      name
+      firstName
+      lastName
+      headline
+      position
+      profilePicture
+    }
+    Replies{
+      id
+      postId
+      timeStamp
+      commentText
+      userComment{
+        id
+        email
+        name
+        firstName
+        lastName
+        headline
+        profilePicture
+      }
+    }
+    Likes{
+      id
+      commentId
+      User{
+        id
+      }
+    }
+    commentText
+    timeStamp
   }
 }
 `;

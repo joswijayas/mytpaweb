@@ -11,14 +11,15 @@ type Comment{
 }
 
 type LikeComment{
-    id: ID!
+    id: ID!  
     commentId: ID!
     User: User! @goField(forceResolver: true)
 }
 
 extend type Query{
-    postsComment(Limit: Int!, Offset: Int!, postId: ID!): [Comment]!
+    postsComment(id: ID!): Comment!
     commentReply(Limit: Int!, Offset: Int!, commentId: ID!):[Comment!]!
+    postComments(Limit:Int! , Offset:Int! , postId:ID!) : [Comment!]!
 }
 
 extend type Mutation{

@@ -1,3 +1,17 @@
+@import "../styles/variable.scss";
 .notification{
-    height: 520px;
+    height: fit-content;
+}
+
+.notif-component{
+    padding: 10px;
+    background-color: $secondary-color;
+    max-width: 300px;
+    border-radius: 10px;
+}
+
+.notif-big{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }

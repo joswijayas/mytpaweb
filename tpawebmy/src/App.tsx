@@ -16,6 +16,7 @@ import { UseCurrentUser } from "./Context/UserContext";
 import MainPage from "./MainPageRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import ResPas from "./resPas/ResPas";
+import ResetPassword from "./components/ResetPassword";
 
 // ...
 
@@ -52,6 +53,7 @@ function App(){
             <Route path="/" element={<Register />} />
             <Route path="/Login" element={<Login/>}/>
             <Route path="/ResetPassword" element={<ResPas/>}/>
+            <Route path="/ResetPassword/:id" element={<ResetPassword/>}/>
             <Route path="/ForgotPassword" element={<ForgotPassword/>}/>
             <Route path="/MainPage/*" element={<MainPage/>}/>
             <Route path="/Verification/:id" element={<Verification/>}/>
